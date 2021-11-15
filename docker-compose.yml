@@ -2,7 +2,19 @@ version: '3.7'
 
 services:
 
-  baget:
+  yarp:
+    image: eassbhhtgu/yarpspike:latest
+    environment:
+      ReverseProxy:Routes:route1:ClusterId: "cluster1"
+      ReverseProxy:Routes:route1:Match:Hosts:0: "nuget"
+      ReverseProxy:Routes:route2:ClusterId: "cluster2"
+      ReverseProxy:Routes:route2:Match:Hosts:0: "pihole"
+      ReverseProxy:Clusters:cluster1:Destinations:destination1:Address: "http://nuget/"
+      ReverseProxy:Clusters:cluster2:Destinations:destination1:Address: "http://pihole/"
+    ports:
+    - 80:80/tcp
+
+  nuget:
     image: loicsharma/baget:latest
     environment:
       ApiKey: ${NuGetServerApiKey:-8e7b324ee43b689f77c2f95b099fd6f5}
@@ -11,8 +23,6 @@ services:
       Database__Type: Sqlite
       Database__ConnectionString: Data Source=/var/baget/baget.db
       Search__Type: Database
-    ports:
-    - 30080:80/tcp
     volumes:
     - baget-data:/var/baget:rw
 
@@ -27,12 +37,6 @@ services:
       DNS2: 9.9.9.10
       TZ: UTC
       WEBPASSWORD: ${PIHOLE_WEB_PASSWORD:-76c9eca2bced3e751a47c188afe6fd9d}
-    ports:
-    - 40053:53/tcp
-    - 40053:53/udp
-    - 40067:67/udp
-    - 40080:80/tcp
-    - 40443:443/tcp
     restart: unless-stopped
     volumes:
     - pihole-volume-dnsmasq:/etc/dnsmasq.d/:rw

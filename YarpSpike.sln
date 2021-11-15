@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YarpSpike.WebApi", "YarpSpi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E35C6F8A-8EB7-43BD-9ACA-0C3177E51FB5}"
 	ProjectSection(SolutionItems) = preProject
+		build.sh = build.sh
 		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject
 Global
